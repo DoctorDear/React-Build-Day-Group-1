@@ -23,7 +23,9 @@ const App = () => {
   const [isRandomizing, setIsRandomzing] = useState(false);
 
   const availableItem = useMemo(() => {
-    return menusData.filter((menu) => menu.type === mode);
+    return menusData.filter(
+      (menu) => menu.type.toLowerCase() === mode.toLowerCase(),
+    );
   }, [mode]);
   console.log(mode);
 
@@ -39,7 +41,7 @@ const App = () => {
   };
 
   const handleRandomize = () => {
-    if (availableItem.lenght === 0 || isRandomizing) return;
+    if (availableItem.length === 0 || isRandomizing) return;
 
     setIsRandomzing(true);
     let counter = 0;
@@ -47,7 +49,7 @@ const App = () => {
     const intervalTime = 80;
 
     const interval = setInterval(() => {
-      const randomIndex = Math.floor(Math.random() * availableItem.lenght);
+      const randomIndex = Math.floor(Math.random() * availableItem.length);
       setCurrentItem(availableItem[randomIndex]);
       counter++;
 
