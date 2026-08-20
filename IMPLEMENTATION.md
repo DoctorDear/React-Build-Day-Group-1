@@ -9,8 +9,10 @@
 1. [`src/data/menus.json`](#1-srcdatamenusjson-mock-data-อาหาร--เครื่องดื่ม) (Member 5)
 2. [`src/components/Header.jsx`](#2-srccomponentsheaderjsx-brand--title) (Member 5)
 3. [`src/components/ModeSelector.jsx`](#3-srccomponentsmodeselectorjsx-ปุ่มเลือกโหมด) (Member 2)
-4. [`src/components/MenuCard.jsx`](#4-srccomponentsmenucardjsx-การ์ดแสดงผล--ปุ่มกด) (Member 3 & 4)
-5. [`src/App.jsx`](#5-srcappjsx-state--random-engine) (Member 1)
+4. [`src/components/MenuDisplay.jsx`](#4-srccomponentsmenudisplayjsx-แสดงผลรูปและชื่อ) (Member 3)
+5. [`src/components/ActionButtons.jsx`](#5-srccomponentsactionbuttonsjsx-ปุ่มกดสุ่มและค้นหา) (Member 4)
+6. [`src/components/MenuCard.jsx`](#6-srccomponentsmenucardjsx-กล่องครอบ-wrapper) (Member 3)
+7. [`src/App.jsx`](#7-srcappjsx-state--random-engine) (Member 1)
 
 ---
 
@@ -181,28 +183,24 @@ export default function ModeSelector({ currentMode, onSelectMode }) {
 
 ---
 
-### 4. `src/components/MenuCard.jsx` (การ์ดแสดงผล & ปุ่มกด)
-*(รับผิดชอบโดย Member 3 & Member 4)*
+### 4. `src/components/MenuDisplay.jsx` (แสดงผลรูปและชื่อ)
+*(รับผิดชอบโดย Member 3)*
 
 ```jsx
 import React from 'react';
-import { RotateCw, MapPin, Sparkles } from 'lucide-react';
 
 /**
- * MenuCard Component
+ * MenuDisplay Component
  * 
  * Props:
  * - item (object | null): เมนูที่กำลังแสดงผล
  * - isShuffling (boolean): สถานะว่ากำลังสุ่มอยู่หรือไม่
- * - onRandomize (function): Callback เมื่อกดปุ่ม "สุ่มใหม่"
- * - onFindNearby (function): Callback เมื่อกดปุ่ม "ค้นหาร้านใกล้ฉัน"
  */
-export default function MenuCard({ item, isShuffling, onRandomize, onFindNearby }) {
+export default function MenuDisplay({ item, isShuffling }) {
   if (!item) return null;
 
   return (
-    <div className="w-full max-w-sm mx-auto bg-white rounded-3xl p-6 shadow-sm border border-stone-200/80 space-y-6">
-      
+    <div className="space-y-6">
       {/* 1. Image Container (กรอบรูปตรงกลางตาม Mockup) */}
       <div className="w-full aspect-square bg-stone-100 rounded-2xl overflow-hidden relative border border-stone-200/50 shadow-inner flex items-center justify-center">
         {item.imageUrl ? (
@@ -227,44 +225,98 @@ export default function MenuCard({ item, isShuffling, onRandomize, onFindNearby 
           {item.name}
         </h3>
       </div>
+    </div>
+  );
+}
+```
 
-      {/* 3. Action Buttons */}
-      <div className="space-y-3 pt-2">
-        {/* ปุ่ม 1: สุ่มใหม่ */}
-        <button
-          type="button"
-          onClick={onRandomize}
-          disabled={isShuffling}
-          className={`w-full py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all active:scale-95 ${
-            isShuffling
-              ? 'bg-stone-300 text-stone-500 cursor-not-allowed'
-              : 'bg-stone-200 hover:bg-stone-300 text-stone-800'
-          }`}
-        >
-          {isShuffling ? (
-            <>
-              <Sparkles className="w-4 h-4 animate-spin text-stone-600" />
-              กำลังสุ่ม...
-            </>
-          ) : (
-            <>
-              <RotateCw className="w-4 h-4 text-stone-700" />
-              สุ่มใหม่
-            </>
-          )}
-        </button>
+---
 
-        {/* ปุ่ม 2: ค้นหาร้านใกล้ฉัน (เปิด Google Maps) */}
-        <button
-          type="button"
-          onClick={onFindNearby}
-          disabled={isShuffling}
-          className="w-full py-3.5 rounded-xl font-bold text-sm bg-white border border-stone-300 hover:bg-stone-50 text-stone-800 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-2xs"
-        >
-          <MapPin className="w-4 h-4 text-amber-800" />
-          ค้นหาร้าน ใกล้ฉัน
-        </button>
-      </div>
+### 5. `src/components/ActionButtons.jsx` (ปุ่มกดสุ่มและค้นหา)
+*(รับผิดชอบโดย Member 4)*
+
+```jsx
+import React from 'react';
+import { RotateCw, MapPin, Sparkles } from 'lucide-react';
+
+/**
+ * ActionButtons Component
+ * 
+ * Props:
+ * - isShuffling (boolean): สถานะว่ากำลังสุ่มอยู่หรือไม่
+ * - onRandomize (function): Callback เมื่อกดปุ่ม "สุ่มใหม่"
+ * - onFindNearby (function): Callback เมื่อกดปุ่ม "ค้นหาร้านใกล้ฉัน"
+ */
+export default function ActionButtons({ isShuffling, onRandomize, onFindNearby }) {
+  return (
+    <div className="space-y-3 pt-2">
+      {/* ปุ่ม 1: สุ่มใหม่ */}
+      <button
+        type="button"
+        onClick={onRandomize}
+        disabled={isShuffling}
+        className={`w-full py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all active:scale-95 ${
+          isShuffling
+            ? 'bg-stone-300 text-stone-500 cursor-not-allowed'
+            : 'bg-stone-200 hover:bg-stone-300 text-stone-800'
+        }`}
+      >
+        {isShuffling ? (
+          <>
+            <Sparkles className="w-4 h-4 animate-spin text-stone-600" />
+            กำลังสุ่ม...
+          </>
+        ) : (
+          <>
+            <RotateCw className="w-4 h-4 text-stone-700" />
+            สุ่มใหม่
+          </>
+        )}
+      </button>
+
+      {/* ปุ่ม 2: ค้นหาร้านใกล้ฉัน (เปิด Google Maps) */}
+      <button
+        type="button"
+        onClick={onFindNearby}
+        disabled={isShuffling}
+        className="w-full py-3.5 rounded-xl font-bold text-sm bg-white border border-stone-300 hover:bg-stone-50 text-stone-800 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-2xs"
+      >
+        <MapPin className="w-4 h-4 text-amber-800" />
+        ค้นหาร้าน ใกล้ฉัน
+      </button>
+    </div>
+  );
+}
+```
+
+---
+
+### 6. `src/components/MenuCard.jsx` (กล่องครอบ Wrapper)
+*(รับผิดชอบโดย Member 3)*
+
+```jsx
+import React from 'react';
+import MenuDisplay from './MenuDisplay';
+import ActionButtons from './ActionButtons';
+
+/**
+ * MenuCard Component
+ * เป็นเพียงแค่กล่อง Container ที่เรียกใช้ MenuDisplay และ ActionButtons มาวางต่อกัน
+ */
+export default function MenuCard({ item, isShuffling, onRandomize, onFindNearby }) {
+  return (
+    <div className="w-full max-w-sm mx-auto bg-white rounded-3xl p-6 shadow-sm border border-stone-200/80 space-y-6">
+      
+      {/* ส่วนแสดงรูปและชื่อ (Member 3) */}
+      <MenuDisplay item={item} isShuffling={isShuffling} />
+
+      {/* ส่วนปุ่มกด (Member 4) */}
+      <ActionButtons 
+        isShuffling={isShuffling} 
+        onRandomize={onRandomize} 
+        onFindNearby={onFindNearby} 
+      />
+
     </div>
   );
 }

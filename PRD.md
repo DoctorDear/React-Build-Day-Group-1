@@ -134,9 +134,11 @@ kinhub-project/
     ├── data/
     │   └── menus.json   # 🟡 [Member 5] ฐานข้อมูลจำลอง (Mock Data)
     └── components/
-        ├── Header.jsx       # 🟢 [Member 5] แถบหัวเว็บและโลโก้แอป
-        ├── ModeSelector.jsx # 🔵 [Member 2] ปุ่มสลับโหมดอาหาร/เครื่องดื่ม
-        └── MenuCard.jsx     # 🟣 [Member 3, 4] การ์ดแสดงรูปภาพเมนู และปุ่มกดต่างๆ
+        ├── Header.jsx         # 🟢 [Member 5] แถบหัวเว็บและโลโก้แอป
+        ├── ModeSelector.jsx   # 🔵 [Member 2] ปุ่มสลับโหมดอาหาร/เครื่องดื่ม
+        ├── MenuDisplay.jsx    # 🟣 [Member 3] แสดงรูปภาพเมนู และชื่อเมนู
+        ├── ActionButtons.jsx  # 🟠 [Member 4] ปุ่มกด "สุ่มใหม่" และ "ค้นหาร้าน"
+        └── MenuCard.jsx       # 🟣 [Member 3] กล่อง Container ที่ครอบ MenuDisplay และ ActionButtons
 ```
 
 ### 5.2 Component Hierarchy & Props Contract
@@ -145,10 +147,15 @@ kinhub-project/
        ┌───────────────────────────┼───────────────────────────┐
        ▼                           ▼                           ▼
   [ Header ]               [ ModeSelector ]               [ MenuCard ]
-  - Title & Brand          - currentMode                  - item (Object)
-                           - onSelectMode (Callback)      - isShuffling (Boolean)
-                                                          - onRandomize (Callback)
-                                                          - onFindNearby (Callback)
+                                                        (Layout Wrapper)
+                                                               │
+                                         ┌─────────────────────┴─────────────────────┐
+                                         ▼                                           ▼
+                                  [ MenuDisplay ]                            [ ActionButtons ]
+                                  - item (Object)                            - item (Object)
+                                  - isShuffling (Boolean)                    - isShuffling (Boolean)
+                                                                             - onRandomize (Callback)
+                                                                             - onFindNearby (Callback)
 ```
 
 ### รายละเอียด Props Interface แต่ละ Component:
@@ -158,8 +165,11 @@ kinhub-project/
 | **`Header`** | *(ไม่มี)* | - | แสดงแบรนด์ KinHub และหัวข้อ "วันนี้กินอะไรดี" |
 | **`ModeSelector`** | `currentMode` | `string` | โหมดปัจจุบัน (`'food'` หรือ `'drink'`) |
 | | `onSelectMode` | `(mode: string) => void` | ฟังก์ชัน Callback ส่งโหมดที่เลือกกลับไปที่ App |
-| **`MenuCard`** | `item` | `object \| null` | ข้อมูลเมนูปัจจุบัน `{ id, name, category, type, imageUrl }` |
-| | `isShuffling` | `boolean` | สถานะกำลังสุ่ม (ใช้ควบคุมการเบลอรูปภาพและ Disable ปุ่ม) |
+| **`MenuCard`** | *(รับ Props ส่งต่อ)* | - | รับ Props ทั้งหมดจาก App แล้วกระจายต่อให้ลูกทั้งสองตัว |
+| **`MenuDisplay`** | `item` | `object \| null` | ข้อมูลเมนูปัจจุบัน (เพื่อแสดงชื่อและภาพ) |
+| | `isShuffling` | `boolean` | สถานะกำลังสุ่ม (ใช้ควบคุมการเบลอรูปภาพ) |
+| **`ActionButtons`** | `item` | `object \| null` | ข้อมูลเมนู (เพื่อดึงชื่อไปค้นหาใน Google Maps) |
+| | `isShuffling` | `boolean` | สถานะกำลังสุ่ม (Disable ปุ่มและเปลี่ยน Text) |
 | | `onRandomize` | `() => void` | ฟังก์ชัน Callback เมื่อคลิกปุ่ม "สุ่มใหม่" |
 | | `onFindNearby` | `() => void` | ฟังก์ชัน Callback เมื่อคลิกปุ่ม "ค้นหาร้านใกล้ฉัน" |
 
@@ -185,8 +195,8 @@ kinhub-project/
 | :--- | :--- | :--- | :--- |
 | **Member 1 (Lead)** | **State & Random Engine** | `src/App.jsx` | วางโครงสร้าง State กลาง, เขียนฟังก์ชัน `handleRandomize` (Interval Shuffling), และฟังก์ชันเปิด Google Maps |
 | **Member 2** | **Mode Selector Component** | `src/components/ModeSelector.jsx` | สร้างปุ่มสลับ "อาหาร" / "เครื่องดื่ม" ด้วย `.map()`, จัดการ Active/Inactive Style |
-| **Member 3** | **Menu Card Presentation** | `src/components/MenuCard.jsx` (Layout) | จัดการ Layout การ์ดสี่เหลี่ยม, กรอบรูปภาพ, จัด Typography ชื่อเมนู และจัด Responsive |
-| **Member 4** | **Action Buttons & Animation** | `src/components/MenuCard.jsx` (Buttons) | ทำปุ่ม "สุ่มใหม่" (พร้อม Loading Spinner) และปุ่ม "ค้นหาร้านใกล้ฉัน" พร้อม Effect ปุ่มกด |
+| **Member 3** | **Menu Display & Layout** | `MenuDisplay.jsx` และ `MenuCard.jsx` | จัดการ UI รูปภาพเมนู ชื่อเมนู และสร้าง `MenuCard` เพื่อเป็นกรอบครอบโค้ดของตัวเองกับ Member 4 |
+| **Member 4** | **Action Buttons** | `src/components/ActionButtons.jsx` | ทำปุ่ม "สุ่มใหม่" (พร้อม Loading Spinner) และปุ่ม "ค้นหาร้านใกล้ฉัน" พร้อม Effect ปุ่มกด |
 | **Member 5** | **Branding & Mock Data** | `src/components/Header.jsx`, `src/data/menus.json` | ออกแบบ Header สไตล์ Minimalist และเตรียมข้อมูลอาหาร + เครื่องดื่ม 10-15 เมนูพร้อมรูปภาพ |
 
 ---

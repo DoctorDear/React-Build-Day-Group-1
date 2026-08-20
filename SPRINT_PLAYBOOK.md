@@ -1,9 +1,9 @@
-# 🚀 4-Hour Sprint Playbook: แผนปฏิบัติการ Build Day แบบ Step-by-Step
+# 🚀 3-Hour Sprint Playbook: แผนปฏิบัติการ Build Day (ฉบับเร่งด่วน)
 > **เป้าหมาย:** ทำงานขนานกันได้ 100%, โค้ดไม่ชนกัน (Zero Git Conflicts), เสร็จทันเวลา, และพรีเซนต์ได้คะแนนเต็ม
 
 ---
 
-## ⏱️ Phase 1: Setup & Data Sync (นาทีที่ 0 - 30)
+## ⏱️ Phase 1: Setup & Data Sync (นาทีที่ 0 - 15) / เร่งด่วน
 **เป้าหมาย:** ทุกคนต้องมี Source Code ตั้งต้น และข้อมูล `menus.json` ชุดเดียวกันอยู่ในเครื่อง
 
 1. **[Member 1 - Lead]** สร้างโปรเจกต์ Vite (ลบไฟล์ขยะออกให้หมด), ติดตั้ง `tailwindcss`, `lucide-react`
@@ -13,35 +13,59 @@
 5. **[ทุกคน]** แตก Branch ของตัวเอง ทันที:
    - M1: `git checkout -b feat/app-logic`
    - M2: `git checkout -b feat/mode-selector`
-   - M3: `git checkout -b feat/menu-card`
-   - M4: `git checkout -b feat/buttons-animation`
+   - M3: `git checkout -b feat/menu-display`
+   - M4: `git checkout -b feat/action-buttons`
    - M5: `git checkout -b feat/header`
 
 ---
 
-## 💻 Phase 2: Component Isolation (นาทีที่ 30 - 120) / ให้เวลา 1.5 ชม.
+## 💻 Phase 2: Component Isolation (นาทีที่ 15 - 90) / ให้เวลา 1 ชม. 15 นาที
 **เป้าหมาย:** ทุกคนเขียน Component ของตัวเองโดย **ห้ามยุ่งกับไฟล์ของคนอื่นเด็ดขาด** (นี่คือคีย์สำคัญที่จะไม่เกิด Conflict)
 
-* **กฎเหล็ก:** ให้รับ `props` แบบจำลอง (Mock Props) ไปก่อน ยังไม่ต้องสนว่า App จะส่งอะไรมาจริง
+### 🛠️ เทคนิคการเทสต์งานแยกรายบุคคล (Component Sandbox)
+ปัญหาคลาสสิกคือ: *"ถ้าผมทำแค่ปุ่ม แล้วผมจะรันดูหน้าตายังไง ในเมื่อ App.jsx ยังไม่เสร็จ?"*
+**วิธีแก้:** ให้แต่ละคนเอา Component ของตัวเองไปเรนเดอร์ชั่วคราวในไฟล์ `src/main.jsx` ในเครื่องตัวเองได้เลย!
+
+**ตัวอย่าง:** ถ้า Member 2 ทำ `ModeSelector.jsx` 
+ให้ Member 2 เปิดไฟล์ `src/main.jsx` ในเครื่องตัวเอง แล้วเปลี่ยนโค้ดเป็นแบบนี้:
+```jsx
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+// 1. Import แค่ไฟล์ตัวเอง
+import ModeSelector from './components/ModeSelector' 
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <div className="p-10 bg-gray-100 min-h-screen">
+      {/* 2. เรนเดอร์ไฟล์ตัวเอง พร้อมใส่ Props จำลอง (Mock Props) ลงไปตรงๆ */}
+      <ModeSelector currentMode="food" onSelectMode={(mode) => console.log(mode)} />
+    </div>
+  </StrictMode>,
+)
+```
+* **ประโยชน์:** ทุกคนสามารถเขียนโค้ด, ปรับ CSS, และทดสอบปุ่มกดของตัวเองได้อย่างอิสระ 100% 
+* **กฎเหล็ก:** ห้ามทำการ Commit ไฟล์ `main.jsx` กลับขึ้นไปที่ Git (หรือถ้าเผลอ Commit ไป ให้ Member 1 ยึด `main.jsx` ของตัวเองเป็นหลักตอนรวมร่าง)
+
 * **M1 (App.jsx):** ระหว่างรอเพื่อน ให้สร้าง State ทั้งหมดรอไว้ และ Import ไฟล์เปล่าๆ ของเพื่อนเข้ามาวางโครง (Layout)
-* **M2, M3, M4, M5:** โฟกัสเฉพาะไฟล์ Component ตัวเอง ใช้ข้อมูลจำลองชั่วคราวในการจัด UI ให้สวยที่สุด
-* 🚨 **Checkpoint:** เมื่อถึงนาทีที่ 120 ทุกคนต้อง *หยุดทำ UI* ไม่ว่าจะสวยแค่ไหนก็ตาม เพื่อเตรียมรวมโค้ด
+* **M2, M3, M4, M5:** โฟกัสเฉพาะไฟล์ Component ตัวเอง ใช้เทคนิค Sandbox ด้านบนเพื่อจัด UI ให้สวยที่สุด
+* 🚨 **Checkpoint:** เมื่อถึงนาทีที่ 90 (ผ่านไปชั่วโมงครึ่งของโปรเจกต์) ทุกคนต้อง **วางมือจาก UI ทันที!** ไม่ว่าจะสวยแค่ไหนก็ตาม เพื่อเตรียมรวมโค้ด
 
 ---
 
-## 🔗 Phase 3: Integration & Wiring (นาทีที่ 120 - 180) / ให้เวลา 1 ชม.
+## 🔗 Phase 3: Integration & Wiring (นาทีที่ 90 - 140) / ให้เวลา 50 นาที
 **เป้าหมาย:** นำ Component ย่อยๆ มารวมกันที่ `App.jsx` และเชื่อม State เข้าด้วยกัน
 
 1. **[ทุกคน]** ทำการ `git add .`, `git commit -m "done: component name"`, และ `git push` ขึ้น Branch ของตัวเอง
 2. **[Member 1 - Lead]** ทำหน้าที่ **Merge Master**:
    - นำโค้ดจาก `feat/header` มา Merge ก่อน เช็กว่าแสดงผลไหม
    - นำ `feat/mode-selector` มา Merge แล้วโยง Props `currentMode`, `onSelectMode`
-   - นำ `feat/menu-card` มา Merge แล้วโยง Props `item`, `isShuffling`
+   - นำ `feat/menu-display` และ `feat/action-buttons` มาประกอบกันใน `MenuCard`
 3. **[ทุกคน]** ล้อมวงดูจอของ Member 1 (หรือแชร์จอ) เพื่อช่วยกัน Debug หากมีการส่ง Props ผิดพลาด หรือ UI พังตอนนำมารวมกัน
 
 ---
 
-## 🧪 Phase 4: QA, Polish & ซ้อมพรีเซนต์ (นาทีที่ 180 - 240) / ให้เวลา 1 ชม.สุดท้าย
+## 🧪 Phase 4: QA, Polish & ซ้อมพรีเซนต์ (นาทีที่ 140 - 180) / ให้เวลา 40 นาทีสุดท้าย
 **เป้าหมาย:** อุดรอยรั่ว, จัดการ Edge Cases, และเตรียมสคริปต์พูดให้ตรงกับ Rubric
 
 ### 🛡️ Checklist ทดสอบระบบ (QA):
