@@ -118,8 +118,28 @@
 
 ---
 
-## 5. 🏗️ Component Architecture & Props Contract
+## 5. 📂 Project Structure & Component Architecture
 
+### 5.1 Project Folder Structure (โครงสร้างไฟล์)
+เพื่อให้ทีมเห็นภาพรวมของโค้ด โฟลเดอร์และไฟล์ใน `src/` จะถูกจัดระเบียบดังนี้ เพื่อให้ทุกคนรู้ว่าตัวเองต้องทำงานที่ไฟล์ไหน:
+
+```text
+kinhub-project/
+├── index.html           # หน้า HTML หลัก (ใส่ฟอนต์ Prompt)
+├── package.json         # Dependencies (React, Tailwind, Lucide Icons)
+└── src/
+    ├── main.jsx         # ไฟล์ Mount React (Boilerplate)
+    ├── index.css        # ไฟล์เรียกใช้ Tailwind CSS (Boilerplate)
+    ├── App.jsx          # 🔴 [Member 1] Component หลักสำหรับคุม State & Logic ทั้งหมด
+    ├── data/
+    │   └── menus.json   # 🟡 [Member 5] ฐานข้อมูลจำลอง (Mock Data)
+    └── components/
+        ├── Header.jsx       # 🟢 [Member 5] แถบหัวเว็บและโลโก้แอป
+        ├── ModeSelector.jsx # 🔵 [Member 2] ปุ่มสลับโหมดอาหาร/เครื่องดื่ม
+        └── MenuCard.jsx     # 🟣 [Member 3, 4] การ์ดแสดงรูปภาพเมนู และปุ่มกดต่างๆ
+```
+
+### 5.2 Component Hierarchy & Props Contract
 ```
                               [ App.jsx ]
        ┌───────────────────────────┼───────────────────────────┐
