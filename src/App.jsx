@@ -23,18 +23,19 @@ const App = () => {
   const [isRandomizing, setIsRandomzing] = useState(false);
 
   const availableItem = useMemo(() => {
-    menusData.filter((menu) => menu.type === mode);
+    return menusData.filter((menu) => menu.type === mode);
   }, [mode]);
   console.log(mode);
 
   useEffect(() => {
-    if (availableItem.lenght > 0) {
+    if (availableItem.length > 0) {
       setCurrentItem(availableItem[0]);
     }
-  }, [mode, availableItem]);
+  }, [availableItem]);
 
   const handleModeChange = (newMode) => {
-    if (isRandomizing) return setMode(newMode);
+    if (isRandomizing) return;
+    setMode(newMode);
   };
 
   const handleRandomize = () => {
@@ -46,13 +47,13 @@ const App = () => {
     const intervalTime = 80;
 
     const interval = setInterval(() => {
-      const randomIndex = Math.floor(Math.ramdom() * availableItem.lenght);
+      const randomIndex = Math.floor(Math.random() * availableItem.lenght);
       setCurrentItem(availableItem[randomIndex]);
       counter++;
 
       if (counter >= totalSteps) {
         clearInterval(interval);
-        const finalIndex = Math.floor(Math.random() * availableItem);
+        const finalIndex = Math.floor(Math.random() * availableItem.length);
         setCurrentItem(availableItem[finalIndex]);
         setIsRandomzing(false);
       }
@@ -74,7 +75,7 @@ const App = () => {
         <MenuCard
           item={currentItem}
           isShuffling={isRandomizing}
-          onRandomzie={handleRandomize}
+          onRandomize={handleRandomize}
           onFindNearby={handleFindNearby}
         />
       </div>
