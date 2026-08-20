@@ -1,174 +1,180 @@
 # 🍲 PRD & Technical Blueprint: KinHub (วันนี้กินอะไรดี)
-> **Project:** Minimalist Food & Drink Randomizer Web App  
-> **Course / Cohort:** JSD 13 (Junior Software Developer) - React Build Day  
-> **Sprint Duration:** 4 Hours Timebox  
+> **Project Name:** KinHub - Minimalist Food & Drink Randomizer  
+> **Course / Cohort:** JSD 13 (Junior Software Developer) - React Build Day Sprint  
+> **Duration:** 4 Hours Timebox  
 > **Team:** Group 1 (5 Members)  
 > **Tech Stack:** React 19 (Vite), Tailwind CSS, Lucide Icons  
-> **Reference Code:** ดูโค้ดตัวอย่างฉบับสมบูรณ์ได้ที่ [IMPLEMENTATION.md](./IMPLEMENTATION.md)
+> **Reference Code:** [IMPLEMENTATION.md](./IMPLEMENTATION.md)
 
 ---
 
-## 1. 📌 Executive Summary & Problem Statement
+## 1. 📌 Executive Summary & Objective
 
-### 1.1 The Problem (ปัญหาที่พบ)
-ในแต่ละวัน ผู้คนมักเสียเวลาและเกิด **"Decision Fatigue"** กับการเลือกว่าจะ *"กินข้าวอะไร"* หรือ *"สั่งเครื่องดื่มอะไรดี"* ในช่วงพักกลางวันและช่วงบ่าย
+### 1.1 ที่มาของปัญหา (Problem Statement)
+ในแต่ละวัน ผู้คนมักเจอปัญหา **"Decision Fatigue" (ความเหนื่อยล้าในการตัดสินใจ)** ในการเลือกเมนูอาหารคาวช่วงพักเที่ยง หรือการเลือกเครื่องดื่มแก้ง่วงช่วงบ่าย ซึ่งมักทำให้เสียเวลาและเกิดความลังเล
 
-### 1.2 The Solution (ทางออกของแอปพลิเคชัน)
-เว็บแอปพลิเคชัน **KinHub** สไตล์ Minimalist คลีนตา ใช้งานง่ายบนมือถือและเดสก์ท็อป:
-1. สลับโหมดเลือกระหว่าง **"🍴 อาหาร"** หรือ **"☕ เครื่องดื่ม"**
-2. กดปุ่ม **"สุ่มใหม่"** เพื่อสุ่มเมนูพร้อมแอนิเมชัน
-3. กดปุ่ม **"📍 ค้นหาร้านใกล้ฉัน"** เพื่อเปิด Google Maps นำทางหรือค้นหาร้านอาหาร/คาเฟ่เมนูนั้นที่อยู่ใกล้ตัวทันที
+### 1.2 วัตถุประสงค์ของโปรเจกต์ (Project Objective)
+1. **Product Goal:** สร้างเว็บแอปพลิเคชันสไตล์ Minimalist ที่ช่วยสุ่มอาหารและเครื่องดื่มให้ผู้ใช้ได้ทันทีใน 1 คลิก พร้อมทั้งสามารถค้นหาร้านค้าที่ขายเมนูนั้นรอบตัวผ่าน Google Maps ได้ทันที
+2. **Learning Goal (JSD 13):** ฝึกทักษะการทำงานร่วมกัน 5 คนในฐานะ Software Engineer ผ่านการวาง Architecture, การออกแบบ Component Interface (Props/State), และการประยุกต์ใช้ React Core Concepts ได้อย่างถูกต้อง
 
 ---
 
-## 2. 🎯 Core Features & User Stories (Acceptance Criteria)
+## 2. 🎯 Scope of Work (ขอบเขตงานอย่างละเอียด)
 
 ```
-+-------------------------------------------------------+
-|  KinHub                                               |
-|                                                       |
-|                    วันนี้กินอะไรดี                    |
-|                                                       |
-|             [ 🍴 อาหาร ]   [ ☕ เครื่องดื่ม ]          |
-|                                                       |
-|           +-------------------------------+           |
-|           |                               |           |
-|           |         [ Food Image ]        |           |
-|           |                               |           |
-|           |           ผัดซีอิ๊ว           |           |
-|           |                               |           |
-|           |          [ 🔄 สุ่มใหม่ ]       |           |
-|           |                               |           |
-|           |     [ 📍 ค้นหาร้านใกล้ฉัน ]    |           |
-|           +-------------------------------+           |
-+-------------------------------------------------------+
++-------------------------------------------------------------------+
+|  KinHub (Header)                                                  |
+|                                                                   |
+|                    วันนี้กินอะไรดี (Title)                         |
+|                                                                   |
+|             [ 🍴 อาหาร ]   [ ☕ เครื่องดื่ม ] (ModeSelector)         |
+|                                                                   |
+|           +-------------------------------+                       |
+|           |                               |                       |
+|           |         [ Menu Image ]        | (MenuCard)            |
+|           |                               |                       |
+|           |           ผัดซีอิ๊ว           |                       |
+|           |                               |                       |
+|           |          [ 🔄 สุ่มใหม่ ]       |                       |
+|           |                               |                       |
+|           |     [ 📍 ค้นหาร้านใกล้ฉัน ]    |                       |
+|           +-------------------------------+                       |
++-------------------------------------------------------------------+
 ```
 
-### Feature 1: Mode Switcher (สลับโหมด อาหาร / เครื่องดื่ม)
-* **User Story:** ในฐานะผู้ใช้ ฉันต้องการสลับเลือกระหว่างเมนูอาหารคาวกับเครื่องดื่มได้ง่ายๆ
-* **Acceptance Criteria (AC1):**
-  * **Given:** ผู้ใช้อยู่หน้าจอหลัก
-  * **When:** ผู้ใช้คลิกแท็บ *"🍴 อาหาร"* หรือ *"☕ เครื่องดื่ม"*
-  * **Then:** รายการข้อมูลเมนูจะเปลี่ยนตามโหมดที่เลือกทันที
-  * **And:** แท็บที่เลือกต้องมีกรอบหรือสีไฮไลต์ (Active State) ชัดเจน
+### 2.1 In-Scope (สิ่งที่ต้องทำใน MVP 4 ชั่วโมง)
+* ✅ **โหมดอาหารและเครื่องดื่ม (Mode Switching):** ผู้ใช้สามารถกดสลับระหว่างเมนู "อาหาร" (Food) และ "เครื่องดื่ม" (Drink) ได้
+* ✅ **ระบบสุ่มแบบ Shuffling Animation (Randomizer Engine):** เมื่อกดปุ่ม "สุ่มใหม่" ระบบจะสลับภาพและชื่อเมนูอย่างรวดเร็ว (80ms x 12 รอบ) ก่อนหยุดที่ผลลัพธ์สุดท้าย
+* ✅ **การ์ดแสดงผล (Menu Display Card):** แสดงรูปภาพเมนู และชื่อเมนูเด่นชัดในกรอบสี่เหลี่ยมมินิมอล
+* ✅ **เชื่อมต่อแผนที่ (Nearby Search Integration):** กดปุ่ม "ค้นหาร้านใกล้ฉัน" เพื่อเปิด Google Maps ค้นหาร้านที่ขายเมนูนั้นในละแวกของผู้ใช้
+* ✅ **Responsive Design:** ใช้งานได้สมบูรณ์ทั้งบนหน้าจอมือถือ (375px - 430px) และหน้าจอคอมพิวเตอร์
+
+### 2.2 Out-of-Scope (สิ่งที่ไม่ทำใน 4 ชั่วโมง เพื่อคุมเวลา)
+* ❌ ระบบ Login / Register และ Backend Database (ใช้ Mock Data `menus.json` และ Client-side React State แทน)
+* ❌ ระบบสั่งอาหารเดลิเวอรีจริง (ใช้การ Redirect ไปยัง Google Maps Search แทน)
+* ❌ ระบบคิดเงินหรือชำระเงิน
+
+### 2.3 Non-Functional Requirements (เกณฑ์คุณภาพ)
+* **Performance:** แอนิเมชันการสุ่มต้องลื่นไหล ไม่กระตุก และมีการ Clear Interval เมื่อสุ่มเสร็จเพื่อป้องกัน Memory Leak
+* **Usability:** ปุ่มกดมีขนาดใหญ่ กดง่ายบนมือถือ (Touch Target >= 44px) และมีสถานะ Active/Disabled ชัดเจน
+* **Code Modularity:** แบ่ง Component แยกไฟล์ชัดเจน ไม่เขียนโค้ดรวมกันในไฟล์เดียว เพื่อให้สมาชิก 5 คนแบ่งงานกันได้
 
 ---
 
-### Feature 2: Randomizer Engine (ระบบสุ่มเมนู)
-* **User Story:** ในฐานะผู้ใช้ ฉันต้องการกดปุ่มสุ่มเพื่อให้ระบบเลือกเมนูให้พร้อมแอนิเมชันที่ตื่นเต้น
-* **Acceptance Criteria (AC2):**
-  * **Given:** ผู้ใช้อยู่ในโหมดอาหารหรือเครื่องดื่ม
-  * **When:** ผู้ใช้กดปุ่ม *"🔄 สุ่มใหม่"*
-  * **Then:** ระบบต้องแสดง Shuffling Effect (สลับรูปภาพและชื่อเมนูอย่างรวดเร็วประมาณ 1.5 วินาที)
-  * **And:** ระหว่างที่สุ่ม ปุ่มต้อง `disabled` ชั่วคราวเพื่อป้องกันการกดซ้ำ
-  * **And:** เมื่อหยุดสุ่ม ต้องแสดงรูปภาพและชื่อเมนูผลลัพธ์สุดท้าย
+## 3. 🧠 Knowledge & Tech Stack Map (องค์ความรู้และทักษะที่นำมาใช้)
+
+ในการพัฒนาโปรเจกต์นี้ ทีมจะใช้และฝึกฝนองค์ความรู้ด้าน Software Development ดังนี้:
+
+### 3.1 ⚛️ React Core Concepts
+1. **Component-Driven Development:** การแบ่ง UI ออกเป็นส่วนย่อยที่มีหน้าที่เฉพาะเจาะจง (Single Responsibility Principle) เช่น `Header`, `ModeSelector`, `MenuCard`
+2. **Props & One-way Data Binding:** การส่งผ่านข้อมูลและฟังก์ชัน Callback จาก Parent Component (`App.jsx`) ลงไปยัง Child Components
+3. **Lifting State Up:** การยก State ที่ต้องใช้ร่วมกัน (`mode`, `currentItem`, `isRandomizing`) ไปไว้ที่ `App.jsx` เพื่อให้ทุก Component เข้าถึงและเปลี่ยนแปลงข้อมูลชุดเดียวกันได้
+4. **Keys in Lists:** การกำหนด `key={mode.id}` เมื่อใช้ `.map()` เพื่อช่วยให้ React Virtual DOM เปรียบเทียบและอัปเดต Element ได้อย่างมีประสิทธิภาพ
+
+### 3.2 🪝 React Hooks & Lifecycle
+1. **`useState`:** ใช้จัดการ Reactive State ภายในแอป (เช่น โหมดที่เลือก, ข้อมูลเมนูปัจจุบัน, สถานะกำลังสุ่ม)
+2. **`useEffect`:** ใช้ดักจับการเปลี่ยนแปลงของ `mode` เพื่อเปลี่ยนเมนูเริ่มต้นของโหมดนั้นๆ ทันที
+3. **`useMemo`:** ใช้คำนวณและกรอง Array ข้อมูลอาหาร/เครื่องดื่มจาก `menus.json` เพื่อป้องกันการคำนวณซ้ำโดยไม่จำเป็นเมื่อ Component Re-render
+
+### 3.3 💻 JavaScript (ES6+) Features
+1. **Array Methods:**
+   * `Array.prototype.map()`: ใช้แปลง Array ของโหมดเป็นปุ่ม UI
+   * `Array.prototype.filter()`: ใช้กรองเมนูตาม `type: "food"` หรือ `type: "drink"`
+2. **Asynchronous Timers (`setInterval` & `clearInterval`):** ใช้สร้างลูปสลับภาพเมนูแบบสุ่มอย่างรวดเร็วเพื่อสร้าง Animation Effect และสั่งหยุดเมื่อครบเวลา
+3. **Math API:** `Math.floor(Math.random() * length)` สำหรับการสุ่ม Index ของ Array
+4. **URL Encoding & Web API:** `encodeURIComponent()` และ `window.open(url, '_blank')` สำหรับสร้าง Link และเปิดหน้าต่าง Google Maps Search
+
+### 3.4 🎨 Styling & CSS (Tailwind CSS)
+1. **Utility-First Styling:** ใช้คลาสของ Tailwind เช่น `flex`, `items-center`, `justify-center`, `rounded-3xl`, `shadow-sm`
+2. **Color Palette & Theme:** ใช้วรรณะสี Earth Tone (Stone, Amber, Neutral Gray) ให้ความรู้สึกมินิมอล คลีนตา
+3. **Transitions & Transforms:** ใช้ `transition-all`, `active:scale-95`, `animate-spin` เพื่อสร้าง Micro-interaction ให้ปุ่มกดและไอคอน
+4. **Responsive Breakpoints:** ใช้ `sm:`, `w-full max-w-md` เพื่อจัดการความกว้างบนหน้าจอขนาดต่างๆ
+
+### 3.5 🤝 Git & Team Collaboration
+1. **Feature Branching:** แยก Branch สำหรับแต่ละ Component เช่น `feat/header`, `feat/mode-selector`, `feat/menu-card`
+2. **Interface Agreement:** การตกลง Props Interface ล่วงหน้า เพื่อให้ทุกคนเขียนโค้ดขนานกันได้โดยไม่ต้องรอโค้ดของเพื่อน
 
 ---
 
-### Feature 3: Nearby Search Integration (ค้นหาร้านใกล้ฉันผ่าน Google Maps)
-* **User Story:** ในฐานะผู้ใช้ เมื่อได้เมนูที่ถูกใจแล้ว ฉันต้องการหาร้านที่ขายเมนูนี้รอบตัวทันที
-* **Acceptance Criteria (AC3):**
-  * **Given:** มีเมนูอาหารหรือเครื่องดื่มแสดงอยู่บนหน้าจอ
-  * **When:** ผู้ใช้คลิกปุ่ม *"📍 ค้นหาร้านใกล้ฉัน"*
-  * **Then:** ระบบต้องเปิดหน้าต่างใหม่ไปยัง Google Maps Search ด้วยคำค้นหา `[ชื่อเมนู] ใกล้ฉัน` (เช่น `https://www.google.com/maps/search/ผัดซีอิ๊ว+ใกล้ฉัน`)
+## 4. 📋 User Stories & Acceptance Criteria (Gherkin Format)
+
+### Story 1: สลับประเภทเมนู (Mode Switching)
+* **Given:** ผู้ใช้อยู่ที่หน้าจอหลักของ KinHub
+* **When:** ผู้ใช้คลิกเลือกแท็บ *"☕ เครื่องดื่ม"*
+* **Then:** ระบบต้องเปลี่ยนสถานะโหมดเป็น `drink` และสไตล์ปุ่มต้องแสดงสถานะ Active
+* **And:** การ์ดเมนูต้องเปลี่ยนมาแสดงเมนูเครื่องดื่มเริ่มต้นทันที
+
+### Story 2: การสุ่มเมนูพร้อมแอนิเมชัน (Randomizing)
+* **Given:** ผู้ใช้เปิดดูเมนูในโหมดใดโหมดหนึ่ง
+* **When:** ผู้ใช้กดปุ่ม *"🔄 สุ่มใหม่"*
+* **Then:** รูปภาพและชื่อเมนูต้องสลับเปลี่ยนแบบสุ่มอย่างรวดเร็ว (Shuffling) เป็นเวลาประมาณ 1.5 วินาที
+* **And:** ปุ่มสุ่มต้องอยู่ในสถานะ `disabled` และแสดงข้อความ *"กำลังสุ่ม..."* พร้อมไอคอนหมุน
+* **And:** เมื่อครบเวลา ระบบต้องแสดงผลลัพธ์เมนูสุดท้ายที่ถูกสุ่มได้
+
+### Story 3: การค้นหาร้านใกล้ฉัน (Nearby Search)
+* **Given:** สุ่มได้เมนูผลลัพธ์ เช่น *"ผัดซีอิ๊ว"*
+* **When:** ผู้ใช้กดปุ่ม *"📍 ค้นหาร้านใกล้ฉัน"*
+* **Then:** เว็บเบราว์เซอร์ต้องเปิดแท็บใหม่ไปยัง Google Maps ด้วย URL `https://www.google.com/maps/search/ผัดซีอิ๊ว+ใกล้ฉัน`
 
 ---
 
-## 3. 🏗️ Component Hierarchy & Architecture
+## 5. 🏗️ Component Architecture & Props Contract
 
-```text
-App (Root - Holds State & Random Logic)
-│
-├── Header (Brand 'KinHub' & Title 'วันนี้กินอะไรดี')
-│
-├── ModeSelector (Pill Buttons: '🍴 อาหาร' vs '☕ เครื่องดื่ม')
-│
-└── MenuCard (Image Container, Menu Title, 'สุ่มใหม่' Button, 'ค้นหาร้านใกล้ฉัน' Button)
+```
+                              [ App.jsx ]
+       ┌───────────────────────────┼───────────────────────────┐
+       ▼                           ▼                           ▼
+  [ Header ]               [ ModeSelector ]               [ MenuCard ]
+  - Title & Brand          - currentMode                  - item (Object)
+                           - onSelectMode (Callback)      - isShuffling (Boolean)
+                                                          - onRandomize (Callback)
+                                                          - onFindNearby (Callback)
 ```
 
----
-
-### 3.1 Props & State Contract (ข้อตกลง Interface ระหว่างสมาชิก)
+### รายละเอียด Props Interface แต่ละ Component:
 
 | Component | Props Name | Type | Description |
 | :--- | :--- | :--- | :--- |
-| **`Header`** | - | - | แสดงโลโก้และชื่อหัวข้อ |
+| **`Header`** | *(ไม่มี)* | - | แสดงแบรนด์ KinHub และหัวข้อ "วันนี้กินอะไรดี" |
 | **`ModeSelector`** | `currentMode` | `string` | โหมดปัจจุบัน (`'food'` หรือ `'drink'`) |
-| | `onSelectMode` | `(mode: string) => void` | Callback ส่งโหมดที่เลือกกลับไปที่ App |
+| | `onSelectMode` | `(mode: string) => void` | ฟังก์ชัน Callback ส่งโหมดที่เลือกกลับไปที่ App |
 | **`MenuCard`** | `item` | `object \| null` | ข้อมูลเมนูปัจจุบัน `{ id, name, category, type, imageUrl }` |
-| | `isShuffling` | `boolean` | สถานะว่ากำลังสุ่มอยู่หรือไม่ (ใช้ปรับ Effect ภาพ) |
-| | `onRandomize` | `() => void` | Callback เมื่อกดปุ่ม "สุ่มใหม่" |
-| | `onFindNearby` | `() => void` | Callback เมื่อกดปุ่ม "ค้นหาร้านใกล้ฉัน" |
+| | `isShuffling` | `boolean` | สถานะกำลังสุ่ม (ใช้ควบคุมการเบลอรูปภาพและ Disable ปุ่ม) |
+| | `onRandomize` | `() => void` | ฟังก์ชัน Callback เมื่อคลิกปุ่ม "สุ่มใหม่" |
+| | `onFindNearby` | `() => void` | ฟังก์ชัน Callback เมื่อคลิกปุ่ม "ค้นหาร้านใกล้ฉัน" |
 
 ---
 
-## 4. 📊 Data Schema & State Dictionary
+## 6. 🎓 JSD 13 Rubric Mapping & Technical Defense
 
-### 4.1 Mock Data Schema (`src/data/menus.json`)
-```json
-[
-  {
-    "id": "food-01",
-    "name": "ผัดซีอิ๊ว",
-    "type": "food",
-    "category": "เส้น",
-    "imageUrl": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    "id": "drink-01",
-    "name": "ชาไทยเย็น",
-    "type": "drink",
-    "category": "ชา",
-    "imageUrl": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80"
-  }
-]
-```
+ตารางสำหรับเตรียมความพร้อมในการตอบคำถามและนำเสนอโปรเจกต์:
 
-### 4.2 State Table in `App.jsx`
-
-| State Name | Type | Initial Value | Purpose |
-| :--- | :--- | :--- | :--- |
-| `mode` | `string` | `'food'` | ควบคุมโหมดปัจจุบัน (`'food'` หรือ `'drink'`) |
-| `currentItem` | `object \| null` | `menusData[0]` | เมนูที่กำลังแสดงผลอยู่ในการ์ด |
-| `isRandomizing` | `boolean` | `false` | จัดการสถานะแอนิเมชันและ Disable ปุ่ม |
-
----
-
-## 5. 🎓 JSD 13 Rubric Alignment Checklist
-
-| เกณฑ์การประเมิน (Rubric) | สิ่งที่มีในโปรเจกต์ KinHub | เหตุผลทางเทคนิค (สำหรับตอบคำถาม) |
+| เกณฑ์การประเมิน (Rubric) | จุดที่นำมาใช้ในโปรเจกต์ | คำอธิบายทางเทคนิค (สำหรับตอบผู้ตรวจ) |
 | :--- | :--- | :--- |
-| **1. At least 3 Components** | แยก `Header`, `ModeSelector`, `MenuCard` และ `App` | **Component Modularity:** แยกส่วน Header, การเลือกโหมด, และการ์ดแสดงผล เพื่อให้โค้ดอ่านง่ายและ Reuse ได้ |
-| **2. At least 1 `useState`** | มี 3 `useState` ใน `App.jsx` (`mode`, `currentItem`, `isRandomizing`) | ควบคุมการเปลี่ยนโหมดและ Re-render ผลลัพธ์การสุ่มแบบ Reactive |
-| **3. At least 2 Event Handlers** | `handleRandomize()`, `handleFindNearby()`, `handleModeChange()` | จัดการ User Interaction ในการสุ่มเมนูและเปิดลิงก์ภายนอก |
-| **4. At least 1 `.map()` Render** | เรนเดอร์ปุ่มเลือกโหมดใน `ModeSelector` จาก Array `MODES` | แปลง Array ข้อมูลเป็น JSX Button Elements พร้อมกำหนด `key` |
-| **5. At least 1 Conditional Render** | สลับสไตล์ Active ของปุ่มโหมด และสถานะ `{isRandomizing ? ... : ...}` | แสดงผล UI ตามสถานะของแอปพลิเคชัน |
+| **1. At least 3 Components** | แยก `Header`, `ModeSelector`, `MenuCard` และ `App` | ใช้หลักการ **Modular Architecture** เพื่อแยก UI ออกเป็นส่วนๆ ทำให้โค้ด Clean, อ่านง่าย, และแบ่งงานในทีม 5 คนได้สะดวก |
+| **2. At least 1 `useState`** | มี 3 States: `mode`, `currentItem`, `isRandomizing` ใน `App.jsx` | ใช้จัดการ State แบบ **Reactive** เมื่อค่าเปลี่ยน React จะทำการ Re-render หน้าจอเฉพาะส่วนที่เกี่ยวข้องโดยอัตโนมัติ |
+| **3. At least 2 Event Handlers** | `handleRandomize()`, `handleFindNearby()`, `handleModeChange()` | ใช้จัดการ Event ที่เกิดจากการกระทำของผู้ใช้ (User Interactions) เช่น การกดปุ่ม และควบคุม State |
+| **4. At least 1 `.map()` Render** | เรนเดอร์ปุ่มโหมดใน `ModeSelector.jsx` จาก Array `MODES` | ใช้แปลง JavaScript Array เป็น JSX Button Elements พร้อมกำหนด `key` เพื่อประสิทธิภาพของ Virtual DOM |
+| **5. At least 1 Conditional Render** | สลับสไตล์ Active ของปุ่มโหมด และข้อความระหว่างกำลังสุ่ม `{isShuffling ? ... : ...}` | ควบคุมการแสดงผลของ UI ตามเงื่อนไขของสถานะแอปพลิเคชันในขณะนั้น |
 
 ---
 
-## 6. 👥 การแบ่งงาน 5 คนในทีม (Task Breakdown)
+## 7. 👥 4-Hour Sprint Plan & Task Allocation (แบ่งงาน 5 คน)
 
-* **🧑‍💻 สมาชิกคนที่ 1 (Lead & Logic):**
-  * รับผิดชอบ: `src/App.jsx`
-  * หน้าที่: ควบคุม State กลาง (`mode`, `currentItem`, `isRandomizing`), ฟังก์ชันสุ่ม Shuffling Effect, และฟังก์ชันเปิด Google Maps
-* **🧑‍💻 สมาชิกคนที่ 2 (Mode Switcher):**
-  * รับผิดชอบ: `src/components/ModeSelector.jsx`
-  * หน้าที่: สร้างปุ่มสลับ "🍴 อาหาร" และ "☕ เครื่องดื่ม" โดยใช้ `.map()` พร้อมสไตล์ Active/Inactive
-* **🧑‍💻 สมาชิกคนที่ 3 (Card UI & Layout):**
-  * รับผิดชอบ: `src/components/MenuCard.jsx`
-  * หน้าที่: จัดวางกล่องรูปภาพตรงกลาง, ข้อความชื่อเมนู, และจัดระยะ Padding/Shadow สไตล์ Minimalist
-* **🧑‍💻 สมาชิกคนที่ 4 (Action Buttons & Animations):**
-  * รับผิดชอบ: ปุ่ม *"สุ่มใหม่"* และ *"ค้นหาร้านใกล้ฉัน"* ใน `MenuCard.jsx`
-  * หน้าที่: ใส่แอนิเมชันปุ่มกด (Active scale, Spinner) และตกแต่งปุ่มโทนสีน้ำตาล-เบจตาม Mockup
-* **🧑‍💻 สมาชิกคนที่ 5 (Branding & Data):**
-  * รับผิดชอบ: `src/components/Header.jsx` และ `src/data/menus.json`
-  * หน้าที่: ออกแบบโลโก้ KinHub และรวบรวมข้อมูลอาหาร + เครื่องดื่มอย่างละ 10 เมนูพร้อมรูปภาพสวยๆ
+| สมาชิก | หน้าที่ / บทบาท | ไฟล์ที่รับผิดชอบ | รายละเอียดงานที่ต้องทำ |
+| :--- | :--- | :--- | :--- |
+| **Member 1 (Lead)** | **State & Random Engine** | `src/App.jsx` | วางโครงสร้าง State กลาง, เขียนฟังก์ชัน `handleRandomize` (Interval Shuffling), และฟังก์ชันเปิด Google Maps |
+| **Member 2** | **Mode Selector Component** | `src/components/ModeSelector.jsx` | สร้างปุ่มสลับ "อาหาร" / "เครื่องดื่ม" ด้วย `.map()`, จัดการ Active/Inactive Style |
+| **Member 3** | **Menu Card Presentation** | `src/components/MenuCard.jsx` (Layout) | จัดการ Layout การ์ดสี่เหลี่ยม, กรอบรูปภาพ, จัด Typography ชื่อเมนู และจัด Responsive |
+| **Member 4** | **Action Buttons & Animation** | `src/components/MenuCard.jsx` (Buttons) | ทำปุ่ม "สุ่มใหม่" (พร้อม Loading Spinner) และปุ่ม "ค้นหาร้านใกล้ฉัน" พร้อม Effect ปุ่มกด |
+| **Member 5** | **Branding & Mock Data** | `src/components/Header.jsx`, `src/data/menus.json` | ออกแบบ Header สไตล์ Minimalist และเตรียมข้อมูลอาหาร + เครื่องดื่ม 10-15 เมนูพร้อมรูปภาพ |
 
 ---
 
-## 7. 🧪 Quality Assurance & Edge Cases Checklist
+## 8. 🧪 Quality Assurance & Edge Cases Checklist
 
-1. [ ] **Mode Switching:** เมื่อสลับโหมดจาก "อาหาร" เป็น "เครื่องดื่ม" การ์ดต้องสุ่มเมนูเครื่องดื่มเริ่มต้นทันที
-2. [ ] **Google Maps Search:** เมื่อกดปุ่มค้นหาร้านใกล้ฉัน ต้องเปิด Tab ใหม่ไปยัง Google Maps และค้นหาชื่อเมนูนั้นถูกต้อง
-3. [ ] **Spam Click Protection:** ระหว่างที่กำลังสุ่ม (1.5 วินาที) ต้องกดปุ่มสุ่มซ้ำไม่ได้
-4. [ ] **Mobile Responsiveness:** หน้าจอแสดงผลได้สวยงามทั้งบนจอมือถือและเดสก์ท็อป
+- [ ] **Data Filtering:** เมื่อสลับโหมด อาหารต้องไม่ออกมาปนกับเครื่องดื่ม
+- [ ] **Animation Cleanup:** เมื่อสุ่มเสร็จ `clearInterval` ต้องทำงานถูกต้อง ไม่เกิดการสุ่มค้าง
+- [ ] **External Link:** ปุ่มค้นหาร้านใกล้ฉัน ต้องเปิด Tab ใหม่ (`target="_blank"`) และคำค้นหาถูกต้อง
+- [ ] **Spam Click Lock:** ขณะกำลังสุ่ม (isRandomizing = true) ต้องกดปุ่มสุ่มซ้ำไม่ได้
+- [ ] **Responsive Test:** ทดสอบเปิดบนหน้าจอขนาดมือถือ (Mobile View) แล้วจัดวางกึ่งกลางสวยงาม
