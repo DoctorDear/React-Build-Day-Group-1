@@ -16,7 +16,7 @@ import img15 from '../assets/15_suki.jpg';
 import img16 from '../assets/16_americano.jpg';
 import img17 from '../assets/17_cappuccino.jpg';
 import img18 from '../assets/18_matcha.jpg';
-import img19 from '../assets/19_coocoa.jpgjpgg';
+import img19 from '../assets/19_coocoa.jpg';
 import img20 from '../assets/20_latte.jpg';
 import img21 from '../assets/21_matchalatte.jpg';
 import img22 from '../assets/22_taromilktea.jpg';
@@ -186,3 +186,6 @@ export const menus = [
         image : img23,
          },
     ];
+
+export default menus;
+
