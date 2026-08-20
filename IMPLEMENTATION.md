@@ -6,7 +6,7 @@
 ---
 
 ## 📑 สารบัญไฟล์
-1. [`src/data/menus.json`](#1-srcdatamenusjson-mock-data-อาหาร--เครื่องดื่ม) (Member 5)
+1. [`src/data/menus.js`](#1-srcdatamenusjson-mock-data-อาหาร--เครื่องดื่ม) (Member 5)
 2. [`src/components/Header.jsx`](#2-srccomponentsheaderjsx-brand--title) (Member 5)
 3. [`src/components/ModeSelector.jsx`](#3-srccomponentsmodeselectorjsx-ปุ่มเลือกโหมด) (Member 2)
 4. [`src/components/MenuDisplay.jsx`](#4-srccomponentsmenudisplayjsx-แสดงผลรูปและชื่อ) (Member 3)
@@ -16,11 +16,12 @@
 
 ---
 
-### 1. `src/data/menus.json` (Mock Data อาหาร & เครื่องดื่ม)
+### 1. `src/data/menus.js` (Mock Data อาหาร & เครื่องดื่ม)
 *(รับผิดชอบโดย Member 5)*
 
-```json
-[
+```javascript
+export default [
+
   {
     "id": "food-01",
     "name": "ผัดซีอิ๊วหมู",
@@ -332,7 +333,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Header from './components/Header';
 import ModeSelector from './components/ModeSelector';
 import MenuCard from './components/MenuCard';
-import menusData from './data/menus.json';
+import menusData from './data/menus.js';
 
 export default function App() {
   // 1. [JSD Concept: useState] โหมดปัจจุบัน ('food' หรือ 'drink')

@@ -50,7 +50,7 @@
 * ✅ **Responsive Design:** ใช้งานได้สมบูรณ์ทั้งบนหน้าจอมือถือ (375px - 430px) และหน้าจอคอมพิวเตอร์
 
 ### 2.2 Out-of-Scope (สิ่งที่ไม่ทำใน 4 ชั่วโมง เพื่อคุมเวลา)
-* ❌ ระบบ Login / Register และ Backend Database (ใช้ Mock Data `menus.json` และ Client-side React State แทน)
+* ❌ ระบบ Login / Register และ Backend Database (ใช้ Mock Data `menus.js` และ Client-side React State แทน)
 * ❌ ระบบสั่งอาหารเดลิเวอรีจริง (ใช้การ Redirect ไปยัง Google Maps Search แทน)
 * ❌ ระบบคิดเงินหรือชำระเงิน
 
@@ -74,7 +74,7 @@
 ### 3.2 🪝 React Hooks & Lifecycle
 1. **`useState`:** ใช้จัดการ Reactive State ภายในแอป (เช่น โหมดที่เลือก, ข้อมูลเมนูปัจจุบัน, สถานะกำลังสุ่ม)
 2. **`useEffect`:** ใช้ดักจับการเปลี่ยนแปลงของ `mode` เพื่อเปลี่ยนเมนูเริ่มต้นของโหมดนั้นๆ ทันที
-3. **`useMemo`:** ใช้คำนวณและกรอง Array ข้อมูลอาหาร/เครื่องดื่มจาก `menus.json` เพื่อป้องกันการคำนวณซ้ำโดยไม่จำเป็นเมื่อ Component Re-render
+3. **`useMemo`:** ใช้คำนวณและกรอง Array ข้อมูลอาหาร/เครื่องดื่มจาก `menus.js` เพื่อป้องกันการคำนวณซ้ำโดยไม่จำเป็นเมื่อ Component Re-render
 
 ### 3.3 💻 JavaScript (ES6+) Features
 1. **Array Methods:**
@@ -132,7 +132,7 @@ kinhub-project/
     ├── index.css        # ไฟล์เรียกใช้ Tailwind CSS (Boilerplate)
     ├── App.jsx          # 🔴 [Member 1] Component หลักสำหรับคุม State & Logic ทั้งหมด
     ├── data/
-    │   └── menus.json   # 🟡 [Member 5] ฐานข้อมูลจำลอง (Mock Data)
+    │   └── menus.js   # 🟡 [Member 5] ฐานข้อมูลจำลอง (Mock Data)
     └── components/
         ├── Header.jsx         # 🟢 [Member 5] แถบหัวเว็บและโลโก้แอป
         ├── ModeSelector.jsx   # 🔵 [Member 2] ปุ่มสลับโหมดอาหาร/เครื่องดื่ม
@@ -197,7 +197,7 @@ kinhub-project/
 | **Member 2** | **Mode Selector Component** | `src/components/ModeSelector.jsx` | สร้างปุ่มสลับ "อาหาร" / "เครื่องดื่ม" ด้วย `.map()`, จัดการ Active/Inactive Style |
 | **Member 3** | **Menu Display & Layout** | `MenuDisplay.jsx` และ `MenuCard.jsx` | จัดการ UI รูปภาพเมนู ชื่อเมนู และสร้าง `MenuCard` เพื่อเป็นกรอบครอบโค้ดของตัวเองกับ Member 4 |
 | **Member 4** | **Action Buttons** | `src/components/ActionButtons.jsx` | ทำปุ่ม "สุ่มใหม่" (พร้อม Loading Spinner) และปุ่ม "ค้นหาร้านใกล้ฉัน" พร้อม Effect ปุ่มกด |
-| **Member 5** | **Branding & Mock Data** | `src/components/Header.jsx`, `src/data/menus.json` | ออกแบบ Header สไตล์ Minimalist และเตรียมข้อมูลอาหาร + เครื่องดื่ม 10-15 เมนูพร้อมรูปภาพ |
+| **Member 5** | **Branding & Mock Data** | `src/components/Header.jsx`, `src/data/menus.js` | ออกแบบ Header สไตล์ Minimalist และเตรียมข้อมูลอาหาร + เครื่องดื่ม 10-15 เมนูพร้อมรูปภาพ |
 
 ---
 

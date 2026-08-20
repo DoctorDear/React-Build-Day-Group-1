@@ -4,11 +4,11 @@
 ---
 
 ## ⏱️ Phase 1: Setup & Data Sync (นาทีที่ 0 - 15) / เร่งด่วน
-**เป้าหมาย:** ทุกคนต้องมี Source Code ตั้งต้น และข้อมูล `menus.json` ชุดเดียวกันอยู่ในเครื่อง
+**เป้าหมาย:** ทุกคนต้องมี Source Code ตั้งต้น และข้อมูล `menus.js` ชุดเดียวกันอยู่ในเครื่อง
 
 1. **[Member 1 - Lead]** สร้างโปรเจกต์ Vite (ลบไฟล์ขยะออกให้หมด), ติดตั้ง `tailwindcss`, `lucide-react`
 2. **[Member 1 - Lead]** สร้างโฟลเดอร์ `src/components` และ `src/data` (ทิ้งไฟล์เปล่าไว้) แล้ว Push ขึ้น GitHub (Branch: `main`)
-3. **[Member 5 - Data]** สร้างไฟล์ `src/data/menus.json` ใส่ข้อมูลให้ครบ 10-15 เมนู แล้ว Push ขึ้น `main`
+3. **[Member 5 - Data]** สร้างไฟล์ `src/data/menus.js` ใส่ข้อมูลให้ครบ 10-15 เมนู แล้ว Push ขึ้น `main`
 4. **[Member 2, 3, 4]** รอจนกว่า Member 5 จะ Push ข้อมูลเสร็จ ➡️ ทำการ `git pull origin main` เพื่อดึงข้อมูลล่าสุดลงเครื่อง
 5. **[ทุกคน]** แตก Branch ของตัวเอง ทันที:
    - M1: `git checkout -b feat/app-logic`
@@ -86,7 +86,7 @@ createRoot(document.getElementById('root')).render(
 * **🗣️ Member 4 (Action & Integration):** 
   > *"ผมดูแลปุ่ม Interaction ในการ์ดครับ คือปุ่มสุ่มใหม่และค้นหาร้านใกล้ฉัน โดยปุ่มค้นหา เราใช้ความรู้เรื่อง Web API ผสมกับ `encodeURIComponent` โยนชื่อเมนูที่สุ่มได้ส่งไปให้ Google Maps Search ครับ"*
 * **🗣️ Member 5 (Data & Header):** 
-  > *"ผมทำ `Header.jsx` และออกแบบ Mock Data `menus.json` ครับ โดยวาง Schema ให้มี type เป็น food และ drink อย่างชัดเจน เพื่อให้ Component อื่นนำไป `.filter()` ใช้งานต่อได้ง่ายครับ"*
+  > *"ผมทำ `Header.jsx` และออกแบบ Mock Data `menus.js` ครับ โดยวาง Schema ให้มี type เป็น food และ drink อย่างชัดเจน เพื่อให้ Component อื่นนำไป `.filter()` ใช้งานต่อได้ง่ายครับ"*
 
 ---
 
