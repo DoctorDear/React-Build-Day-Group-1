@@ -5,6 +5,7 @@ export const menus = [
         type : "Food",
         category: "Rice",
         description : "ผัดกะเพราของแท้ ต้องมีแค่ใบกะเพราเท่านั้น", 
+        image : `../assets/01_basil.jpg`,
          },
     {   id : "2",
         name : "ข้าวผัด", 
